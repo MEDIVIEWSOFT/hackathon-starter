@@ -1,27 +1,25 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
+  h1 Winterschool 2018 Ticket Page
+  p.lead Get ticket now!
   hr
   .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+    .col-sm-12
+      h2 Howto
+      ol 1. 
+          a(href='/signup') Create account
+          | 
+          | (if you want social login, skip it)
+      ol 2. 
+          a(href='/login') Log in
+      ol 3. 
+          a(href='/register') Register
+    .col-sm-12
+      h2 개인정보 동의 안내 (Korean only) 
+      p 개인정보 보호법에 근거하여, 다음과 같이 &lsquo;2017 윈터스쿨 숙소 예약 신청 &rsquo; 업무의 수행에 반드시 필요한 범위 내에서 개인정보를 제공받고 활용하는데 있어서 동의를 받고자 합니다. 등록한다는 것은 아래와 같은 개인정보 제공에 동의함을 내포하고 있습니다. 동의하지 않으시면 등록을 삼가해주시기 바랍니다.
+      li 개인정보를 제공받는 자 : 연세대학교 계산과학공학과 (A3 Foresight Program)
+      li 개인정보를 제공받는 자의 개인정보 이용목적 : 2018 윈터스쿨 숙소 예약 신청
+      li 제공하는 개인정보의 항목 및 폐기 : 성명, 전화번호, 이메일, 카드정보 등은 윈터스쿨 완료 후 10일 이후에 폐기 및 삭제합니다. 
+      li 동의를 거부할 권리 안내 : 귀하는 위와 같이 개인정보를 제공하는데 대한 동의를 거부할 권리가 있습니다. 그러나 동의를 거부하실 경우 ‘2018 윈터스쿨 등록'을 할 수 없으며, 그에 따른 적절한 안내를 받으실 수 없습니다. 
+
