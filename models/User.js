@@ -17,13 +17,6 @@ const userSchema = new mongoose.Schema({
   steam: String,
   tokens: Array,
 
-  profile: {
-    name: String,
-    gender: String,
-    location: String,
-    website: String,
-    picture: String
-  }
 }, { timestamps: true });
 
 /**

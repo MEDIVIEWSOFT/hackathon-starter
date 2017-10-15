@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  .page-header
+    h3 My Ticket
+
+  form.form-horizontal(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label(class='col-sm-2 control-label', for='email') Email
+      .col-sm-8
+        label(class='col-sm-2 control-label', id='email' ) 
+    .form-group
+      label(class='col-sm-2 control-label', for='name') Name (required)
+      .col-sm-8
+        input.form-control(type='text', name='name', id='name')
+    .form-group
+      label(class='col-sm-2 control-label', for='mobile') Mobile (Korean only)
+      .col-sm-8
+        input.form-control(type='text', name='mobile', id='mobile')
+    .form-group
+      label(class='col-sm-2 control-label', for='nationality') Nationality (required)
+      .col-sm-8
+        input.form-control(type='text', name='nationality', id='nationality')
+    .form-group
+      label(class='col-sm-2 control-label', for='affiliation') Affiliation
+      .col-sm-8
+        input.form-control(type='text', name='affiliation', id='affiliation')
+    .form-group
+      label(class='col-sm-2 control-label', for='position') Position
+      .col-sm-8
+        input.form-control(type='text', name='position', id='position')
+    .form-group
+      label(class='col-sm-2 control-label', for='advisor') Adivisor
+      .col-sm-8
+        input.form-control(type='text', name='advisor', id='advisor')
+    .form-group
+      label(class='col-sm-2 control-label', for='poster') Poster presentation
+      .col-sm-8
+        input.form-control(type='checkbox', name='poster', id='poster')
+    .form-group
+      .col-sm-offset-2.col-sm-8
+        button.btn.btn-primary(type='submit')
+          i.fa.fa-envelope
+          | Modify
