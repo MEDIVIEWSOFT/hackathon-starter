@@ -25,11 +25,19 @@ describe('GET /signup', () => {
   });
 });
 
-describe('GET /api', () => {
-  it('should return 200 OK', (done) => {
+describe('GET /register', () => {
+  it('should return 302 Found', (done) => {
     request(app)
-      .get('/api')
-      .expect(200, done);
+      .get('/register')
+      .expect(302, done);
+  });
+});
+
+describe('GET /ticket', () => {
+  it('should return 302 Found', (done) => {
+    request(app)
+      .get('/ticket')
+      .expect(302, done);
   });
 });
 

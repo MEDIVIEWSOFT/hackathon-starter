@@ -3,6 +3,7 @@ const sinon = require('sinon');
 require('sinon-mongoose');
 
 const User = require('../models/User');
+const Ticket = require('../models/Ticket');
 
 describe('User Model', () => {
   it('should create a new user', (done) => {
@@ -97,6 +98,102 @@ describe('User Model', () => {
     User.remove({ email: 'test@gmail.com' }, (err, result) => {
       userMock.verify();
       userMock.restore();
+      expect(err).to.be.null;
+      expect(result.nRemoved).to.equal(1);
+      done();
+    });
+  });
+});
+
+describe('Ticket Model', () => {
+  it('should create a new ticket', (done) => {
+    const UserMock = sinon.mock(new User({ email: 'test@gmail.com', password: 'root' }));
+    const user = UserMock.object;
+    const TicketMock = sinon.mock(new Ticket({ 
+      user: user, 
+      name: 'Jack Kim',
+      nationality: 'South Korea',  
+      mobile: '000-0000-0000',
+      isPoster: true,
+      isPaid: false, }));
+    const ticket = TicketMock.object;
+
+    UserMock
+      .expects('save')
+      .yields(null);
+
+    user.save((err) => {
+      UserMock.verify();
+      UserMock.restore();
+      expect(err).to.be.null;
+    });
+
+    TicketMock
+      .expects('save')
+      .yields(null);
+
+    ticket.save((err) => {
+      TicketMock.verify();
+      TicketMock.restore();
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
+  it('should return error if ticket is already created but tried to create new one', (done) => {
+    const UserMock = sinon.mock(User({ email: 'test@gmail.com', password: 'root' }));
+    const user = UserMock.object;
+    const TicketMock2 = sinon.mock(new Ticket({ 
+      user: user, 
+      name: 'Jack Lee',
+      nationality: 'South Korea',  
+      mobile: '000-0000-0001',
+      isPoster: false,
+      isPaid: true, }));
+    const ticket2 = TicketMock2.object;
+    const expectedError = {
+      name: 'MongoError',
+      code: 11000
+    }
+
+    TicketMock2
+      .expects('save')
+      .yields(expectedError);
+
+    ticket2.save((err, result) => {
+      TicketMock2.verify();
+      TicketMock2.restore();
+      expect(err.name).to.equal('MongoError');
+      expect(err.code).to.equal(11000);
+      expect(result).to.be.undefined;
+      done();
+    });
+  });
+
+  it('should refund ticket by email', (done) => {
+    const UserMock = sinon.mock(User({ email: 'test@gmail.com', password: 'root' }));
+    const user = UserMock.object;
+    const TicketMock = sinon.mock(new Ticket({ 
+      user: user, 
+      name: 'Jack Kim',
+      nationality: 'South Korea',  
+      mobile: '000-0000-0000',
+      isPoster: true,
+      isPaid: false, }));
+    const ticket = TicketMock.object;
+
+    const expectedResult = {
+      nRemoved: 1
+    };
+
+    TicketMock
+      .expects('remove')
+      .withArgs({ email: 'test@gmail.com' })
+      .yields(null, expectedResult);
+
+    ticket.remove({ email: 'test@gmail.com' }, (err, result) => {
+      TicketMock.verify();
+      TicketMock.restore();
       expect(err).to.be.null;
       expect(result.nRemoved).to.equal(1);
       done();
