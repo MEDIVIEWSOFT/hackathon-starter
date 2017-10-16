@@ -2,6 +2,7 @@ const User = require('../models/User');
 const Ticket = require('../models/Ticket');
 
 require('dotenv').config()
+const { Iamporter, IamporterError } = require('iamporter');
 
 /**
  * GET /register
@@ -52,9 +53,7 @@ exports.postRegistration = (req, res, next) => {
 		}
 
 	  ticket.save((err) => {
-			console.log("test");
       if (err) { 
-				console.log(err);
 				return next(err); }
 
       req.flash('success', { msg: 'Ticket added' });
@@ -86,6 +85,16 @@ exports.getTicket = (req, res) => {
       req.flash('Create Ticket First!');
       return res.redirect('/register');
 		}
+
+    const iamporter = new Iamporter({
+      apiKey: process.env.IMP_KEY,
+      secret: process.env.IMP_SECRET 
+    });
+
+    iamporter.findByImpUid(ticket.paymentID)
+    .then((result) => {
+  	  const isPaid = true;
+    });
 
     res.render('ticket', {
       title: 'ticket',
@@ -132,6 +141,26 @@ exports.postUpdateTicket = (req, res, next) => {
 exports.postDeleteTicket = (req, res, next) => {
   Ticket.findOne({ email: req.user.email }, (err, ticket) => {
     if (err) { return next(err); }
+
+    const iamporter = new Iamporter({
+      apiKey: process.env.IMP_KEY,
+      secret: process.env.IMP_SECRET 
+    });
+
+    iamporter.findByImpUid(ticket.paymentID)
+    .then((res) => {
+      if (res.code === 0) {
+        iamporter.cancelByImpUid(ticket.paymentID);
+      } else if (res.code === -1) {
+        // not paid
+      } else {
+        // token invalid
+        reject("Authentication token is invalid");
+      };
+    }).catch((err) => {
+      req.flash('Refund failed. Try again.' , { msg: err.code });
+      res.redirect('/ticket');
+    });
 
     ticket.remove();
     req.flash('info', { msg: 'Your ticket has been deleted. please contact us to refund if you paid' });
