@@ -110,10 +110,14 @@ describe('Ticket Model', () => {
     const UserMock = sinon.mock(new User({ email: 'test@gmail.com', password: 'root' }));
     const user = UserMock.object;
     const TicketMock = sinon.mock(new Ticket({ 
-      user: user, 
+      email: user.email,
       name: 'Jack Kim',
-      nationality: 'South Korea',  
+      nationality: 'South Korea',
       mobile: '000-0000-0000',
+      affiliation: '?',
+      position: '??',
+      advisor: '???',
+      isInKorea: true,
       isPoster: true,
       isPaid: false, }));
     const ticket = TicketMock.object;
@@ -144,10 +148,11 @@ describe('Ticket Model', () => {
     const UserMock = sinon.mock(User({ email: 'test@gmail.com', password: 'root' }));
     const user = UserMock.object;
     const TicketMock2 = sinon.mock(new Ticket({ 
-      user: user, 
+      email: user.email,
       name: 'Jack Lee',
-      nationality: 'South Korea',  
+      nationality: 'South Korea',
       mobile: '000-0000-0001',
+      isInKorea: true,
       isPoster: false,
       isPaid: true, }));
     const ticket2 = TicketMock2.object;
@@ -174,10 +179,11 @@ describe('Ticket Model', () => {
     const UserMock = sinon.mock(User({ email: 'test@gmail.com', password: 'root' }));
     const user = UserMock.object;
     const TicketMock = sinon.mock(new Ticket({ 
-      user: user, 
+      email: user.email,
       name: 'Jack Kim',
-      nationality: 'South Korea',  
+      nationality: 'South Korea',
       mobile: '000-0000-0000',
+      isInKorea: true,
       isPoster: true,
       isPaid: false, }));
     const ticket = TicketMock.object;

@@ -4,42 +4,52 @@ block content
   .page-header
     h3 Registration
 
-  form.form-horizontal(method='POST')
+  script(src='../public/js/pay.js')
+
+  form.form-horizontal(id='register-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label(class='col-sm-2 control-label', for='email') Email
-      .col-sm-8
-        label(class='col-sm-2 control-label', id='email' ) 
+      label(class='col-sm-3 control-label', for='email') Email
+      .col-sm-9
+        label(class='col-sm-3 control-label', id='email') #{user.email}
     .form-group
-      label(class='col-sm-2 control-label', for='name') Name (required)
-      .col-sm-8
-        input.form-control(type='text', name='name', id='name')
+      label(class='col-sm-3 control-label', for='name') Name
+      .col-sm-9
+        input.form-control(type='text', name='name', id='name', placeholder='required', required)
     .form-group
-      label(class='col-sm-2 control-label', for='mobile') Mobile (Korean only)
-      .col-sm-8
-        input.form-control(type='text', name='mobile', id='mobile')
+      label(class='col-sm-3 control-label') Lives in Korea
+      .col-sm-9
+        .form-check
+          label(class='form-check-label')
+            input(class='form-check-input', type='checkbox', name='inKorea', id='livesInKorea', checked=inKorea)
+    .form-group(class='korean-only')
+      label(class='col-sm-3 control-label', for='mobile') Mobile
+      .col-sm-9
+        input.form-control(type='text', name='mobile', id='mobile', placeholder='for Koreans only')
     .form-group
-      label(class='col-sm-2 control-label', for='nationality') Nationality (required)
-      .col-sm-8
-        input.form-control(type='text', name='nationality', id='nationality')
+      label(class='col-sm-3 control-label', for='nationality') Nationality
+      .col-sm-9
+        input.form-control(type='text', name='nationality', id='nationality', placeholder='required', required)
     .form-group
-      label(class='col-sm-2 control-label', for='affiliation') Affiliation
-      .col-sm-8
+      label(class='col-sm-3 control-label', for='affiliation') Affiliation
+      .col-sm-9
         input.form-control(type='text', name='affiliation', id='affiliation')
     .form-group
-      label(class='col-sm-2 control-label', for='position') Position
-      .col-sm-8
+      label(class='col-sm-3 control-label', for='position') Position
+      .col-sm-9
         input.form-control(type='text', name='position', id='position')
     .form-group
-      label(class='col-sm-2 control-label', for='advisor') Adivisor
-      .col-sm-8
+      label(class='col-sm-3 control-label', for='advisor') Adivisor
+      .col-sm-9
         input.form-control(type='text', name='advisor', id='advisor')
     .form-group
-      label(class='col-sm-2 control-label', for='poster') Poster presentation
-      .col-sm-8
-        input.form-control(type='checkbox', name='poster', id='poster')
+      label(class='col-sm-3 control-label', for='poster') Poster presentation
+      .col-sm-9
+        .form-check
+          label(class='form-check-label')
+            input(class='form-check-input', type='checkbox', name='poster', id='poster', checked=poster)
     .form-group
-      .col-sm-offset-2.col-sm-8
-        button.btn.btn-primary(type='submit')
+      .col-sm-offset-3.col-sm-9
+        button.btn.btn-primary(type='submit', onSubmit='')
           i.fa.fa-envelope
           | Send

@@ -19,13 +19,13 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
-
+const browserify = require('browserify');
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+dotenv.load({ path: '.env' });
 
 /**
  * Controllers (route handlers).
@@ -49,12 +49,20 @@ const app = express();
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
-mongoose.connection.on('error', (err) => {
-  console.error(err);
-  console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
-  process.exit();
-});
+// mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
+// mongoose.connection.on('error', (err) => {
+//   console.error(err);
+//   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
+//   process.exit();
+// });
+
+//	.then(() => require('./db-init')(app))
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI, { useMongoClient: true })
+	.catch(err => {
+  	console.error(err);
+  	console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
+  	process.exit();
+	});
 
 /**
  * Express configuration.
@@ -143,15 +151,18 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/register', passportConfig.isAuthenticated, ticketController.getRegistration);
 app.post('/register', passportConfig.isAuthenticated, ticketController.postRegistration);
 app.get('/ticket', passportConfig.isAuthenticated, ticketController.getTicket);
-app.post('/ticket', passportConfig.isAuthenticated, ticketController.postTicket);
+app.post('/ticket/modify', passportConfig.isAuthenticated, ticketController.postUpdateTicket);
+app.post('/ticket/delete', passportConfig.isAuthenticated, ticketController.postDeleteTicket);
 
 /**
  * OAuth authentication routes. (Sign in)
  */
+ /*
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
 });
+*/
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
@@ -176,6 +187,14 @@ app.use(errorHandler());
 app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
   console.log('  Press CTRL-C to stop\n');
+});
+
+app.get('/app.js', () => {
+  var b = browserify();
+  b.add(__dirname + '/public/js/bundle.js');
+  b.transform(require('pugify').pug({
+      pretty: false
+  }));
 });
 
 module.exports = app;

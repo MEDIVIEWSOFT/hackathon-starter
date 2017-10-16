@@ -26,10 +26,10 @@ describe('GET /signup', () => {
 });
 
 describe('GET /register', () => {
-  it('should return 302 Found', (done) => {
+  it('should return 200 Found', (done) => {
     request(app)
       .get('/register')
-      .expect(302, done);
+      .expect(200, done);
   });
 });
 

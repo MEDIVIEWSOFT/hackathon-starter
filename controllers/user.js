@@ -79,7 +79,7 @@ exports.postSignup = (req, res, next) => {
   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
   req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
 
-  const errors = req.validationErrors();
+  const errors = req.getValidationResult();
 
   if (errors) {
     req.flash('errors', errors);

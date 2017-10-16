@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   mobile: String,
-  nationality: { type: String, required: true },  
+  nationality: { type: String, required: true },
   affiliation: String,
   position: String,
   advisor: String,
+  isInKorea: { type: Boolean, required: true },
   isPoster: { type: Boolean, required: true }, 
-  isPaid: { type: Boolean, required: true, default: false }
+  isPaid: { type: Boolean, required: true, default: false },
+  purchaseID: String,
 }, { timestamps: true });
 
 /**
@@ -17,6 +19,7 @@ const ticketSchema = new mongoose.Schema({
  */
 ticketSchema.pre('save', function save(next) {
   const ticket = this;
+  next();
 });
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
