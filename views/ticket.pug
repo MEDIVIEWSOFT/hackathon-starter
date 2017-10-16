@@ -4,8 +4,6 @@ block content
   .page-header
     h3 My Ticket
 
-  script(src='../public/js/pay.js')
-
   form.form-horizontal(action='/ticket/modify', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group

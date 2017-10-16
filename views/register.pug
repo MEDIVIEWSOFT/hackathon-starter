@@ -4,14 +4,16 @@ block content
   .page-header
     h3 Registration
 
-  script(src='../public/js/pay.js')
-
-  form.form-horizontal(id='register-form', method='POST')
+  - var email_addr = user.email;
+  form.form-horizontal(id='registration-form', method='POST', action='/ticket/create')
     input(type='hidden', name='_csrf', value=_csrf)
+    input(type='hidden', name='paymentId')
+    input(type='hidden', name='isPaid')
+    input(type='hidden', id='email', name='email', value=email_addr)
     .form-group
-      label(class='col-sm-3 control-label', for='email') Email
+      label(class='col-sm-3 control-label', for='email-label') Email
       .col-sm-9
-        label(class='col-sm-3 control-label', id='email') #{user.email}
+        label(class='col-sm-3 control-label', id='email-label') #{email_addr}
     .form-group
       label(class='col-sm-3 control-label', for='name') Name
       .col-sm-9
@@ -50,6 +52,6 @@ block content
             input(class='form-check-input', type='checkbox', name='poster', id='poster', checked=poster)
     .form-group
       .col-sm-offset-3.col-sm-9
-        button.btn.btn-primary(type='submit', onSubmit='')
+        button.btn.btn-primary(type='submit')
           i.fa.fa-envelope
           | Send

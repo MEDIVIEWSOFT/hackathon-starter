@@ -24,13 +24,13 @@ exports.getRegistration = (req, res) => {
  * Register
  */
 exports.postRegistration = (req, res, next) => {
-  const errors = req.getValidationResult();
+  const errors = req.validationErrors();
 
 	const isInKorea = req.body.inKorea ? true : false;
 	const isPoster = req.body.poster ? true : false;
 
 	// proceed for korean
-	const isPaid = true;
+	const isPaid = req.body.isPaid ? true : false;
 
 	const ticket = new Ticket({
 		email: req.user.email,
@@ -42,7 +42,8 @@ exports.postRegistration = (req, res, next) => {
   	advisor: req.body.advisor,
   	isInKorea: isInKorea,
   	isPoster: isPoster,
-  	isPaid: isPaid
+  	isPaid: isPaid,
+  	paymentId: req.body.paymentId
 	});
 
   Ticket.findOne({ email: req.user.email }, (err, existingTicket) => {
@@ -86,16 +87,6 @@ exports.getTicket = (req, res) => {
       return res.redirect('/register');
 		}
 
-    const iamporter = new Iamporter({
-      apiKey: process.env.IMP_KEY,
-      secret: process.env.IMP_SECRET 
-    });
-
-    iamporter.findByImpUid(ticket.paymentID)
-    .then((result) => {
-  	  const isPaid = true;
-    });
-
     res.render('ticket', {
       title: 'ticket',
       ticket: existingTicket
@@ -135,6 +126,59 @@ exports.postUpdateTicket = (req, res, next) => {
 };
 
 /**
+ * post /payment/complete
+ * POST from ajax request when request payment
+ * Check the payment was right
+ */
+exports.postCompletePayment = (req, res) => {
+  const iamporter = new Iamporter({
+    apiKey: process.env.IMP_KEY,
+    secret: process.env.IMP_SECRET 
+  });
+
+  iamporter.findByImpUid(req.body.imp_uid)
+  .then((response) => {
+    if (response.data.status == 'paid' && response.data.amount == process.env.IMP_AMOUNT) {
+			res.contentType('json');
+      res.send({
+				result: "success",
+      });
+    } else {
+			console.log(response.data.amount);
+			console.log(process.env.IMP_AMOUNT);
+      iamporter.cancelByImpUid(req.body.imp_uid);
+			res.contentType('json');
+      res.send({
+				result: "fail",
+      });
+    }
+  })
+  .catch((err) => {
+    // error on cancel
+    if (err instanceof IamporterError) {
+      if (err.status === 404) {
+				console.log("no record");
+        req.flash('Payment doesn\'t exist');
+        // not paid, so nothing to refund
+        return resolve("Can't find payment");
+      } else if (err.status === 401) {
+        // token invalid
+				console.log("Token error");
+        req.flash('Token Error. Try again.');
+				return false;
+      } else {
+				// empty response
+        req.flash('Not possible');
+				return false;
+			}
+    } else {
+			req.flash('Not possible');
+			return false;
+		}
+  });
+};
+
+/**
  * post /ticket/delete
  * Delete ticket
  */
@@ -147,23 +191,34 @@ exports.postDeleteTicket = (req, res, next) => {
       secret: process.env.IMP_SECRET 
     });
 
-    iamporter.findByImpUid(ticket.paymentID)
-    .then((res) => {
-      if (res.code === 0) {
-        iamporter.cancelByImpUid(ticket.paymentID);
-      } else if (res.code === -1) {
-        // not paid
-      } else {
+    iamporter.findByImpUid(ticket.paymentId)
+    .then((response) => {
+      if (res.status === 404) {
+        // not paid, so nothing to refund
+        return Promise.resolve("No money for refund");
+      } else if (response.status === 401) {
         // token invalid
-        reject("Authentication token is invalid");
-      };
-    }).catch((err) => {
-      req.flash('Refund failed. Try again.' , { msg: err.code });
-      res.redirect('/ticket');
-    });
+        req.flash('Refund failed. Try again.' , { msg: err.status });
+        response.redirect('/ticket');
+      } else {
+        iamporter.cancelByImpUid(ticket.paymentId);
+      }
+    })
+    .catch((err) => {
+      if (err instanceof IamporterError) {
+        if (err.status === 404) {
+          // not paid, so nothing to refund
+          return resolve("No money for refund");
+        } else if (err.status === 401) {
+          // token invalid
+          req.flash('Refund failed. Try again.' , { msg: err.status });
+          res.redirect('/ticket');
+        };
+      }
+    })
 
     ticket.remove();
-    req.flash('info', { msg: 'Your ticket has been deleted. please contact us to refund if you paid' });
+    req.flash('info', { msg: 'Your ticket has been deleted. please contact us if refund isn\'t completed' });
     res.redirect('/');
   });
 

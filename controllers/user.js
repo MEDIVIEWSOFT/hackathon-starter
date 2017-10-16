@@ -79,10 +79,10 @@ exports.postSignup = (req, res, next) => {
   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
   req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
 
-  const errors = req.getValidationResult();
+  const errors = req.validationErrors();
 
   if (errors) {
-    req.flash('errors', errors);
+    req.flash('errors', { msg: errors });
     return res.redirect('/signup');
   }
 
@@ -91,6 +91,7 @@ exports.postSignup = (req, res, next) => {
     password: req.body.password
   });
 
+  console.log("?");
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (err) { return next(err); }
     if (existingUser) {

@@ -121,7 +121,8 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+// app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: 10 }));
 
 /**
  * Primary app routes.
@@ -149,10 +150,11 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
  * Regiester routes
  */
 app.get('/register', passportConfig.isAuthenticated, ticketController.getRegistration);
-app.post('/register', passportConfig.isAuthenticated, ticketController.postRegistration);
 app.get('/ticket', passportConfig.isAuthenticated, ticketController.getTicket);
-app.post('/ticket/modify', passportConfig.isAuthenticated, ticketController.postUpdateTicket);
+app.post('/ticket/create', passportConfig.isAuthenticated, ticketController.postRegistration);
+app.post('/ticket/update', passportConfig.isAuthenticated, ticketController.postUpdateTicket);
 app.post('/ticket/delete', passportConfig.isAuthenticated, ticketController.postDeleteTicket);
+app.post('/payment/complete', passportConfig.isAuthenticated, ticketController.postCompletePayment);
 
 /**
  * OAuth authentication routes. (Sign in)
