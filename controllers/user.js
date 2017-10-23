@@ -348,16 +348,16 @@ exports.postForgot = (req, res, next) => {
     if (!user) { return; }
     const token = user.passwordResetToken;
     const transporter = nodemailer.createTransport({
-      service: 'SendGrid',
+      service: 'Mailgun',
       auth: {
-        user: process.env.SENDGRID_USER,
-        pass: process.env.SENDGRID_PASSWORD
+        user: process.env.MAILGUN_ADDR,
+        pass: process.env.MAILGUN_PASSWORD
       }
     });
     const mailOptions = {
       to: user.email,
-      from: 'hackathon@starter.com',
-      subject: 'Reset your password on Hackathon Starter',
+      from: 'no-reply@mediviewsoft.com',
+      subject: 'Reset your password on 2018 CSE Winterschool',
       text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
         Please click on the following link, or paste this into your browser to complete the process:\n\n
         http://${req.headers.host}/reset/${token}\n\n
