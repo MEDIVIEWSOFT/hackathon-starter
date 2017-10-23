@@ -142,7 +142,7 @@ app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
-app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
+// app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 /**
@@ -153,7 +153,7 @@ app.get('/register', passportConfig.isAuthenticated, ticketController.getRegistr
 app.post('/register', passportConfig.isAuthenticated, ticketController.postRegistration);
 app.get('/ticket', passportConfig.isAuthenticated, ticketController.getTicket);
 app.post('/ticket/update', passportConfig.isAuthenticated, ticketController.postUpdateTicket);
-app.post('/ticket/delete', passportConfig.isAuthenticated, ticketController.postDeleteTicket);
+// app.post('/ticket/delete', passportConfig.isAuthenticated, ticketController.postDeleteTicket);
 app.post('/payment/complete', passportConfig.isAuthenticated, ticketController.postCompletePayment);
 
 /**

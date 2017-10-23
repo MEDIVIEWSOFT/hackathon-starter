@@ -182,6 +182,8 @@ exports.postCompletePayment = (req, res) => {
  * post /ticket/delete
  * Delete ticket
  */
+/* 
+  DIABLED
 exports.postDeleteTicket = (req, res, next) => {
   Ticket.findOne({ email: req.user.email }, (err, ticket) => {
     if (err) { return next(err); }
@@ -221,5 +223,5 @@ exports.postDeleteTicket = (req, res, next) => {
     req.flash('info', { msg: 'Your ticket has been deleted. please contact us if refund isn\'t completed' });
     res.redirect('/');
   });
-
 };
+*/

@@ -186,6 +186,8 @@ exports.postUpdatePassword = (req, res, next) => {
  * POST /account/delete
  * Delete user account.
  */
+/*
+  DISABLED
 exports.postDeleteAccount = (req, res, next) => {
   User.remove({ _id: req.user.id }, (err) => {
     if (err) { return next(err); }
@@ -194,7 +196,7 @@ exports.postDeleteAccount = (req, res, next) => {
     res.redirect('/');
   });
 };
-
+*/
 /**
  * GET /account/unlink/:provider
  * Unlink OAuth provider.
