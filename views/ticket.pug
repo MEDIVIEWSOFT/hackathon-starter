@@ -4,7 +4,7 @@ block content
   .page-header
     h3 My Ticket
 
-  form.form-horizontal(action='/ticket/modify', method='POST')
+  form.form-horizontal(action='/ticket', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label(class='col-sm-3 control-label', for='email') Email
@@ -38,9 +38,11 @@ block content
     .form-group
       label(class='col-sm-3 control-label', for='poster') Poster presentation
       .col-sm-9
-        .form-check
-          label(class='form-check-label')
-            input(class='form-check-input', type='checkbox', name='poster', id='poster', value=true)
+        if ticket.isPoster
+          label(class='col-sm-2') Yes
+        else
+          label(class='col-sm-2') No
+
     .form-group
       label(class='col-sm-3 control-label') Payment Complete
       .col-sm-9

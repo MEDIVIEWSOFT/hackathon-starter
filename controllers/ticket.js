@@ -14,8 +14,16 @@ exports.getRegistration = (req, res) => {
     return res.redirect('/');
   }
 
-  res.render('register', {
-    title: 'register'
+  Ticket.findOne({ email: req.user.email }, (err, existingTicket) => {
+		if (err) { return next(err); }
+		if (existingTicket) {
+		  req.flash('errors', { msg: 'You already have a ticket' });
+      return res.redirect('/ticket');
+		}
+
+    res.render('register', {
+      title: 'register'
+    });
   });
 };
 
@@ -101,7 +109,6 @@ exports.getTicket = (req, res) => {
  */
 exports.postUpdateTicket = (req, res, next) => {
   const errors = req.validationErrors();
-	var isPoster = req.body.poster == true;
 
   if (errors) {
     req.flash('errors', errors);
@@ -116,7 +123,6 @@ exports.postUpdateTicket = (req, res, next) => {
   	ticket.affiliation = req.body.affiliation || '';
   	ticket.position = req.body.position || '';
   	ticket.advisor = req.body.advisor || '';
-  	ticket.isPoster = isPoster;
 
     ticket.save((err) => {
       if (err) { return next(err); }
