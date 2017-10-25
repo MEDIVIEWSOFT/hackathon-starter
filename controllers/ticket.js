@@ -43,7 +43,8 @@ exports.postRegistration = (req, res, next) => {
   	isInKorea: isInKorea,
   	isPoster: isPoster,
   	isPaid: isPaid,
-  	paymentId: req.body.paymentId
+  	paymentImpUId: req.body.paymentImpUId,
+  	paymentMctUId: req.body.paymentMCTUId
 	});
 
   Ticket.findOne({ email: req.user.email }, (err, existingTicket) => {
@@ -135,7 +136,7 @@ exports.postCompletePayment = (req, res) => {
     apiKey: process.env.IMP_KEY,
     secret: process.env.IMP_SECRET 
   });
-
+  
   iamporter.findByImpUid(req.body.imp_uid)
   .then((response) => {
     if (response.data.status == 'paid' && response.data.amount == process.env.IMP_AMOUNT) {
@@ -178,12 +179,66 @@ exports.postCompletePayment = (req, res) => {
   });
 };
 
+/** 
+  * get /m/complete/payment 
+  */
+exports.getCompleteMobilePayment = (req, res) => { 
+  const iamporter = new Iamporter({
+    apiKey: process.env.IMP_KEY,
+    secret: process.env.IMP_SECRET 
+  });
+  
+  const imp_uid = req.query.imp_uid;
+  iamporter.findByImpUid(imp_uid)
+  .then((response) => {
+    if (response.data.status == 'paid' && response.data.amount == process.env.IMP_AMOUNT) {
+			res.contentType('json');
+      res.send({
+				result: "success",
+      });
+    } else {
+			console.log(response.data.amount);
+			console.log(process.env.IMP_AMOUNT);
+      iamporter.cancelByImpUid(req.body.imp_uid);
+			res.contentType('json');
+      res.send({
+				result: "fail",
+      });
+    }
+  })
+  .catch((err) => {
+    // error on cancel
+    if (err instanceof IamporterError) {
+      if (err.status === 404) {
+				console.log("no record");
+        req.flash('Payment doesn\'t exist');
+        // not paid, so nothing to refund
+        return resolve("Can't find payment");
+      } else if (err.status === 401) {
+        // token invalid
+				console.log("Token error");
+        req.flash('Token Error. Try again.');
+				return false;
+      } else {
+				// empty response
+        req.flash('Not possible');
+				return false;
+			}
+    } else {
+			req.flash('Not possible');
+			return false;
+		}
+  });
+
+}
+
 /**
  * post /ticket/delete
  * Delete ticket
  */
 /* 
   DIABLED
+*/
 exports.postDeleteTicket = (req, res, next) => {
   Ticket.findOne({ email: req.user.email }, (err, ticket) => {
     if (err) { return next(err); }
@@ -224,4 +279,3 @@ exports.postDeleteTicket = (req, res, next) => {
     res.redirect('/');
   });
 };
-*/

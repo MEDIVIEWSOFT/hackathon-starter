@@ -153,8 +153,9 @@ app.get('/register', passportConfig.isAuthenticated, ticketController.getRegistr
 app.post('/register', passportConfig.isAuthenticated, ticketController.postRegistration);
 app.get('/ticket', passportConfig.isAuthenticated, ticketController.getTicket);
 app.post('/ticket/update', passportConfig.isAuthenticated, ticketController.postUpdateTicket);
-// app.post('/ticket/delete', passportConfig.isAuthenticated, ticketController.postDeleteTicket);
+app.post('/ticket/delete', passportConfig.isAuthenticated, ticketController.postDeleteTicket);
 app.post('/payment/complete', passportConfig.isAuthenticated, ticketController.postCompletePayment);
+app.get('/m/payment/complete', passportConfig.isAuthenticated, ticketController.getCompleteMobilePayment);
 
 /**
  * OAuth authentication routes. (Sign in)

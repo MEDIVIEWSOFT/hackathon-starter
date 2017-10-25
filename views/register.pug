@@ -11,7 +11,8 @@ block content
   - var email_addr = user.email;
   form.form-horizontal(id='registration-form', method='POST', action='/register')
     input(type='hidden', name='_csrf', value=_csrf)
-    input(type='hidden', name='paymentId')
+    input(type='hidden', name='paymentImpUId')
+    input(type='hidden', name='paymentMctUId')
     input(type='hidden', name='isPaid')
     input(type='hidden', id='email', name='email', value=email_addr)
     .form-group

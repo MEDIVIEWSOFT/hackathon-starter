@@ -55,12 +55,12 @@ block content
             i.fa.fa-envelope
             | Modify Ticket
   // ** DIABLED ** 
-  // form.form-horizontal(action='/ticket/delete', method='POST')
-  //   input(type='hidden', name='_csrf', value=_csrf)
-  //   .form-group
-  //     label(class='col-sm-3 control-label', for='poster') Ticket Removal
-  //     .col-sm-9
-  //       button.btn.btn-danger(type='submit')
-  //         i.fa.fa-trash
-  //         | Remove Ticket
+  form.form-horizontal(action='/ticket/delete', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label(class='col-sm-3 control-label', for='poster') Ticket Removal
+      .col-sm-9
+        button.btn.btn-danger(type='submit')
+          i.fa.fa-trash
+          | Remove Ticket
 
