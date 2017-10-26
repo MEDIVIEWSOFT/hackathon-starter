@@ -1,8 +1,7 @@
 $(document).ready(function() {
-
   // Place JavaScript code here...
   IMP.init('imp33162581');
-  
+
   $('#registration-form').on('submit', function(e) {
 		e.preventDefault();
     const isInKorea = document.getElementById("livesInKorea").checked ? true : false;
@@ -111,5 +110,99 @@ $(document).ready(function() {
     } // isInKorea if statement
   }); // submit event
 
-  return false;
+  $('#ticket-form').on('submit', function(e) {
+		e.preventDefault();
+
+    if ($('#isPaid-val').text() === 'Yes') {
+      var paymentStatus = 'Yes';
+      if ($('#isKorean-val').text() === 'Yes') {
+        var paymentAmount = '350,000 KRW';
+      } else {
+        var paymentAmount = '0 KRW';
+      }
+    } else {
+      var paymentAmount = '0 KRW';
+      var paymentStatus = 'No';
+    }
+
+    var columns = [
+      {title: "Name", dataKey: "name"},
+      {title: "Content", dataKey: "content"}, 
+    ]; 
+    var rows = [
+      {"name": 'Name', "content": $('#name').val()},
+      {"name": 'Email', "content": $('#email-val').text()},
+      {"name": 'Nationality', "content": $('#nationality').val()},
+      {"name": 'Affiliation', "content": $('#affiliation').val()},
+      {"name": 'Position', "content": $('#position').val()},
+      {"name": 'Price Amount', "content": paymentAmount},
+    ]
+
+    var doc = new jsPDF('p', 'pt');
+    // doc.addFont("PT-Sans", "PT Sans", "normal");
+    // doc.addFont("PT-Sans", "PT Sans", "bold");
+
+    // doc.setFont("PT-Sans", "bold");
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(24);
+    doc.text('3rd CSE Winter School 2018', doc.internal.pageSize.width / 2, doc.internal.pageSize.height * 0.13, 'center');
+
+    doc.setFont("Helvetica", "normal");
+    // doc.setFont("PT-Sans", "normal");
+    doc.setFontSize(18);
+    doc.text('Main Topic : Computational Science & Machine Learning', doc.internal.pageSize.width / 2, doc.internal.pageSize.height * 0.2, 'center');
+
+    doc.setFontSize(14);
+    doc.text('January 8 - 11, 2018', doc.internal.pageSize.width / 2, doc.internal.pageSize.height * 0.23, 'center');
+    doc.text('SonofelIce, Hongcheon-gun, Gangwon-Do, South Korea', doc.internal.pageSize.width / 2, doc.internal.pageSize.height * 0.26, 'center');
+
+    // doc.setFont("Helvetica", "normal");
+    doc.autoTable(columns, rows, {
+      theme: 'grid',
+      startY: doc.internal.pageSize.height * 0.32,
+      showHeader: 'never',
+      columnStyles: {
+        "name": {
+          fontSize: '14',
+          fontStyle: 'bold',
+          columnWidth: 'auto',
+          cellPadding: 10
+        },
+        "content": {
+          fontSize: '14',
+          fontStyle: 'normal',
+          columnWidth: 'auto',
+          cellPadding: 10
+        }
+      },
+    });
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Correspondence", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.63);
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("Haeeun Han", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.65);
+
+    doc.setFont("Helvetica", "normal");
+    doc.text("Dept. of Computational Science & Engineering", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.67);
+    doc.text("Room 609, Building 117", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.69);
+    doc.text("Yonsei University, 50 Yonsei-ro", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.71);
+    doc.text("Seodaemun-gu, Seoul 03722", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.73);
+
+    var d = new Date();
+    const day = new String(('0' + d.getDate()).slice(-2));
+    const month = new String(('0' + (d.getMonth() + 1)).slice(-2));
+    const year = new String(d.getFullYear());
+    
+    doc.setFontSize(16);
+    doc.text(year + '. ' + month + '. ' + day + '. ', doc.internal.pageSize.width / 2, doc.internal.pageSize.height * 0.84, 'center');
+    doc.text("Korean Society for Industrial and Applied Mathematics",  doc.internal.pageSize.width / 2, doc.internal.pageSize.height * 0.9, 'center');
+
+    doc.save('reciept.pdf');
+
+    $('#ticket-form').unbind('submit').submit();
+  });
+
 });

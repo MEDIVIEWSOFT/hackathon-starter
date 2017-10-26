@@ -4,12 +4,12 @@ block content
   .page-header
     h3 My Ticket
 
-  form.form-horizontal(action='/ticket', method='POST')
+  form.form-horizontal(id='ticket-form', method='POST', action='/ticket')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label(class='col-sm-3 control-label', for='email') Email
+      label(class='col-sm-3 control-label', for='email', id='email') Email
       .col-sm-9
-        label(class='col-sm-3', id='email') #{user.email}
+        label(class='col-sm-3', id='email-val') #{user.email}
     .form-group
       label(class='col-sm-3 control-label', for='name') Name
       .col-sm-9
@@ -36,33 +36,49 @@ block content
       .col-sm-9
         input.form-control(type='text', name='advisor', id='advisor', value=ticket.advisor)
     .form-group
-      label(class='col-sm-3 control-label', for='poster') Poster presentation
+      label(class='col-sm-3 control-label') Poster presentation
       .col-sm-9
         if ticket.isPoster
-          label(class='col-sm-2') Yes
+          label(class='col-sm-2' id='isPoster-val') Yes
         else
-          label(class='col-sm-2') No
-
+          label(class='col-sm-2' id='isPoster-val') No
     .form-group
       label(class='col-sm-3 control-label') Payment Complete
       .col-sm-9
         if ticket.isPaid
-          label(class='col-sm-2') Yes
+          label(class='col-sm-2' id='isPaid-val') Yes
         else
-          label(class='col-sm-2') No
+          label(class='col-sm-2' id='isPaid-val') No
+
+    .form-group(class='hidden')
+      label(class='col-sm-3 control-label') is Korean?
+      .col-sm-9
+        if ticket.isPoster
+          label(class='col-sm-2' id='isKorean-val') Yes
+        else
+          label(class='col-sm-2' id='isKorean-val') No
+
+    // .form-group
+    //   .col-sm-offset-3
+    //     .col-sm-3
+    //       button.btn.btn-primary(type='submit')
+    //         i.fa.fa-pencil
+    //         | Modify Ticket
     .form-group
-      .col-sm-offset-3
-        .col-sm-3
-          button.btn.btn-primary(type='submit')
-            i.fa.fa-envelope
-            | Modify Ticket
+      label(class='col-sm-3 control-label') Reciept
+      .col-sm-9
+        button.btn.btn-primary(id='btn-reciept', type='submit')
+          i.fa.fa-file-text
+          | Download Receipt & Modify Ticket
+
   // ** DIABLED ** 
   form.form-horizontal(action='/ticket/delete', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label(class='col-sm-3 control-label', for='poster') Ticket Removal
+      label(class='col-sm-3 control-label') Ticket Removal
       .col-sm-9
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
           | Remove Ticket
+
 
