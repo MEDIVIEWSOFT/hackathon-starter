@@ -22,7 +22,7 @@ exports.getRegistration = (req, res) => {
 		}
 
     res.render('register', {
-      title: 'register'
+      title: 'Register'
     });
   });
 };
@@ -97,7 +97,7 @@ exports.getTicket = (req, res) => {
 		}
 
     res.render('ticket', {
-      title: 'ticket',
+      title: 'Ticket',
       ticket: existingTicket
     });
   })
@@ -120,6 +120,7 @@ exports.postUpdateTicket = (req, res, next) => {
 
 		ticket.name = req.body.name || '';
 		ticket.mobile = req.body.mobile || '';
+  	ticket.nationality = req.body.nationality || '';
   	ticket.affiliation = req.body.affiliation || '';
   	ticket.position = req.body.position || '';
   	ticket.advisor = req.body.advisor || '';
