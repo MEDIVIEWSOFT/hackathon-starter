@@ -116,7 +116,7 @@ $(document).ready(function() {
     if ($('#isPaid-val').text() === 'Yes') {
       var paymentStatus = 'Yes';
       if ($('#isKorean-val').text() === 'Yes') {
-        var paymentAmount = '350,000 KRW';
+        var paymentAmount = '250,000 KRW';
       } else {
         var paymentAmount = '0 KRW';
       }
@@ -135,7 +135,7 @@ $(document).ready(function() {
       {"name": 'Nationality', "content": $('#nationality').val()},
       {"name": 'Affiliation', "content": $('#affiliation').val()},
       {"name": 'Position', "content": $('#position').val()},
-      {"name": 'Price Amount', "content": paymentAmount},
+      {"name": 'Registration Fee', "content": paymentAmount},
     ]
 
     var doc = new jsPDF('p', 'pt');
@@ -176,20 +176,6 @@ $(document).ready(function() {
         }
       },
     });
-
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("Correspondence", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.63);
-
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(12);
-    doc.text("Haeeun Han", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.65);
-
-    doc.setFont("Helvetica", "normal");
-    doc.text("Dept. of Computational Science & Engineering", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.67);
-    doc.text("Room 609, Building 117", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.69);
-    doc.text("Yonsei University, 50 Yonsei-ro", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.71);
-    doc.text("Seodaemun-gu, Seoul 03722", doc.internal.pageSize.width * 0.07, doc.internal.pageSize.height * 0.73);
 
     var d = new Date();
     const day = new String(('0' + d.getDate()).slice(-2));
