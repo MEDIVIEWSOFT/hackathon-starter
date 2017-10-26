@@ -36,7 +36,7 @@ $(document).ready(function() {
         IMP.request_pay({
           pg : 'uplus',
           pay_method : 'card',
-          amount : 1000,
+          amount : 250000,
           merchant_uid : 'ws2018pay_' + new Date().getTime(),
           buyer_name : name,
           buyer_email : email,
