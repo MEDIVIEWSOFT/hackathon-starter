@@ -14,7 +14,7 @@ export PATH=$PATH:${GOPATH//://bin:}/bin
 
 # load environmental variable
 go get -u "github.com/remind101/ssm-env"
-sm-env env
+ssm-env env
 echo "ssm-env env" >> ~/.bash_profile
 
 # add nodejs to yum
