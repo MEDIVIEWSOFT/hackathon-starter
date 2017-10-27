@@ -8,14 +8,14 @@ yum -y update
 yum install -y gcc-c++ make
 
 # install ssm-env
-yum install -y golang
-export GOPATH=$HOME/go
-export PATH=$PATH:${GOPATH//://bin:}/bin
+#yum install -y golang
+#export GOPATH=$HOME/go
+#export PATH=$PATH:${GOPATH//://bin:}/bin
 
 # load environmental variable
-go get -u "github.com/remind101/ssm-env"
-ssm-env env
-echo "ssm-env env" >> ~/.bash_profile
+# go get -u "github.com/remind101/ssm-env"
+# ssm-env env
+# echo "ssm-env env" >> ~/.bash_profile
 
 # add nodejs to yum
 curl --silent --location https://rpm.nodesource.com/setup_6.x | sudo -E bash -
