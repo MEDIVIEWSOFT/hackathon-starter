@@ -2,6 +2,7 @@
 set -e
 
 # load environmental variable
+go get -u "github.com/remind101/ssm-env"
 ssm-env env
 echo "ssm-env env" >> ~/.bash_profile
 

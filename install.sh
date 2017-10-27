@@ -9,7 +9,6 @@ yum install -y gcc-c++ make
 
 # install ssm-env
 yum install -y golang
-go get -u "github.com/remind101/ssm-env"
 export GOPATH=$HOME/go
 export PATH=$PATH:${GOPATH//://bin:}/bin
 
