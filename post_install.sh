@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+# load environmental variable
+ssm-env env
+echo "ssm-env env" >> ~/.bash_profile
+
+# install my app
 cd ~/ws2018-ticket
 npm install
 
