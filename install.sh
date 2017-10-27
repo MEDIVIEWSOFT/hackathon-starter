@@ -21,6 +21,9 @@ yum install -y gcc-c++ make
 curl --silent --location https://rpm.nodesource.com/setup_6.x | sudo -E bash -
 yum -y install nodejs
 
+export PORT=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
+echo "export PORT=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)" >> ~/.bash_profile
+
 # install pm2 module globaly
 npm install -g pm2
 pm2 update
