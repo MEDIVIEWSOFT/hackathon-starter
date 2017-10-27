@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# load environmental variable
-go get -u "github.com/remind101/ssm-env"
-echo $GOPATH
-echo $PATH
-ssm-env env
-echo "ssm-env env" >> ~/.bash_profile
-
 # install my app
 cd ~/ws2018-ticket
 npm install
