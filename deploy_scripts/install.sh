@@ -15,7 +15,7 @@ chmod +x ./install
 rm -f install
 
 # add nodejs to yum
-curl --silent --location https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo -E bash -
 yum install -y make gcc gcc-c++ nodejs default-jre ImageMagick
 
 # install latest stable node version with "n"
