@@ -42,3 +42,22 @@ add_environment_vars PORT $PORT_
 # install pm2 module globaly
 npm install -g pm2
 pm2 update
+
+# install nginx script
+cat >/etc/nginx/conf.d/ws2018.conf << EOL
+server {
+    listen 80;
+
+    # server_name ec2-52-78-76-129.ap-northeast-2.compute.amazonaws.com;
+    server_name ws2018-ticket.mediviewsoft.com;
+
+    location / {
+        proxy_pass http://localhost:$PORT_;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+EOL
