@@ -49,7 +49,9 @@ server {
     listen 80;
 
     # server_name ec2-52-78-76-129.ap-northeast-2.compute.amazonaws.com;
-    server_name ws2018-ticket.mediviewsoft.com;
+    server_name ws2018-ticket.mediviewsoft.com
+                ec2-52-78-76-129.ap-northeast-2.compute.amazonaws.com
+                ;
 
     location / {
         proxy_pass http://localhost:$PORT_;
