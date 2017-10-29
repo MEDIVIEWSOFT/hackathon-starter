@@ -8,7 +8,7 @@ yum -y update
 export AWS_REGION=ap-northeast-2
 cd /home/ec2-user
 yum install -y ruby aws-cli
-aws s3 cp s3://aws-codedeploy-$AWS_REGION/latest/install . --region $AWS_REGION
+wget https://$AWS_REGION.s3.amazonaws.com/latest/install
 chmod +x ./install
 ./install auto
 rm -f install
