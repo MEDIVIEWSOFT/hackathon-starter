@@ -52,3 +52,5 @@ hasRc=`grep "su -l $USER" /etc/rc.d/rc.local | cat`
 if [ -z "$hasRc" ]; then
     sudo sh -c "echo 'su -l $USER -c \"cd ~/ws2018-ticket;sh ./run.sh\"' >> /etc/rc.d/rc.local"
 fi
+
+
