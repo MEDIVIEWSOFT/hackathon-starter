@@ -21,8 +21,20 @@ yum -y install make gcc gcc-c++ nodejs default-jre ImageMagick
 npm install -g n
 n stable
 
-export PORT=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
-echo "export PORT=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)" >> ~/.bash_profile
+# setup enviroment variables
+add_environment_vars() {
+  if [ ! -z $2 ]; then
+    export $1=$2
+    hasEnv=`grep "export $1" ~/.bash_profile | cat`
+    if [ -z "$hasEnv" ]; then
+      echo "export $1=$2" >> ~/.bash_profile
+    else
+      sed -i "/export $1=\b/c\export $1=$2" ~/.bash_profile
+    fi
+  fi
+}
+
+add_environment_vars PORT $(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
 
 # install pm2 module globaly
 npm install -g pm2
