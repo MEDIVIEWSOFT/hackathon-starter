@@ -33,7 +33,9 @@ add_environment_vars IMP_AMOUNT $(aws ssm get-parameters --region ap-northeast-2
 add_environment_vars IMP_KEY $(aws ssm get-parameters --region ap-northeast-2 --names IMP_KEY --query Parameters[0].Value)
 add_environment_vars IMP_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names IMP_SECRET --query Parameters[0].Value)
 
-add_environment_vars PORT $(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
+PORT_org=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
+PORT_=$(sed -e 's/^"//' -e 's/"$//' <<<"$PORT_org")
+add_environment_vars PORT $PORT_
 
 # setup NODE_ENV
 if [ ! -z "$DEPLOYMENT_GROUP_NAME" ]; then

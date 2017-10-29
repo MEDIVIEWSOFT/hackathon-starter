@@ -35,7 +35,9 @@ add_environment_vars() {
   fi
 }
 
-add_environment_vars PORT $(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
+PORT_org=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
+PORT_=$(sed -e 's/^"//' -e 's/"$//' <<<"$PORT_org")
+add_environment_vars PORT $PORT_
 
 # install pm2 module globaly
 npm install -g pm2
