@@ -6,9 +6,10 @@ yum -y update
 
 # install CodeDeploy
 export AWS_REGION=ap-northeast-2
+export AWS_CODEDEPLOY_BUCKET=aws-codedeploy-ap-northeast-2
 cd /home/ec2-user
 yum install -y ruby aws-cli
-wget https://$AWS_REGION.s3.amazonaws.com/latest/install
+wget https://$AWS_CODEDEPLOY_BUCKET.s3.amazonaws.com/latest/install
 chmod +x ./install
 ./install auto
 rm -f install
