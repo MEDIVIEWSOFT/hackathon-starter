@@ -65,4 +65,8 @@ server {
 }
 EOL
 
+# enable https
+sudo /usr/sbin/certbot-auto -n --nginx --domain ws2018-ticket.mediviewsoft.com --redirect
+
+# restart nginx
 sudo service nginx restart
