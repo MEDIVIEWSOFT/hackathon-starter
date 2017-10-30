@@ -64,3 +64,5 @@ server {
     }
 }
 EOL
+
+sudo service nginx restart
