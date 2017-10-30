@@ -34,4 +34,4 @@ add_environment_vars IMP_SECRET $(aws ssm get-parameters --region ap-northeast-2
 
 add_environment_vars PORT $(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
 
-nc -zv 127.0.0.1 $port
+nc -zv 127.0.0.1 $PORT
