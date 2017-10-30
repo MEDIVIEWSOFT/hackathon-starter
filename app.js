@@ -86,18 +86,19 @@ app.use(expressValidator());
 app.use(session({
   resave: false,
   saveUninitialized: true,
-  genid: function(req) {
-    return uuidv4(); // use UUIDs for session IDs
-  },
   secret: process.env.SESSION_SECRET,
   cookie: {
-    secure: true
+    secure: true,
+    maxAge: 60000
   },
   store: new MongoStore({
-    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-    autoReconnect: true,
-    clear_interval: 3600
-  })
+    mongoose.Promise
+  });
+  // store: new MongoStore({
+  //   url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+  //   autoReconnect: true,
+  //   clear_interval: 3600
+  // })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
