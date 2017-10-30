@@ -108,7 +108,6 @@ app.use((req, res, next) => {
     lusca.csrf()(req, res, next);
   }
 });
-app.use(lusca.hsts({ maxAge: 31536000 }));
 app.use(lusca.referrerPolicy('same-origin'));
 app.use(lusca.nosniff());
 app.use(lusca.xframe('SAMEORIGIN'));
