@@ -90,6 +90,9 @@ app.use(session({
     return uuidv4(); // use UUIDs for session IDs
   },
   secret: process.env.SESSION_SECRET,
+  cookie: {
+    secure: true
+  },
   store: new MongoStore({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
     autoReconnect: true,
