@@ -82,7 +82,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
-app.enable('trust proxy', 1);
+app.enable('trust proxy');
+app.set('trust proxy', 5);
+app.use(flash());
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -100,7 +102,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 app.use((req, res, next) => {
   if (req.path === '/api/upload') {
     next();
