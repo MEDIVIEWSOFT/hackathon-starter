@@ -88,7 +88,6 @@ app.use(session({
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   cookie: {
-    domain: 'mediviewsoft.com',
     secure: true,
     expires: 60000
   },
@@ -114,6 +113,11 @@ app.use((req, res, next) => {
 // app.use(lusca.nosniff());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
+app.use(lusca.hsts({
+  maxAge:            31536000,
+  includeSubDomains: true,
+  preload:           true,
+}));
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
