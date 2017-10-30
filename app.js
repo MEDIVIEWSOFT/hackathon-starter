@@ -104,13 +104,12 @@ app.use((req, res, next) => {
   if (req.path === '/api/upload') {
     next();
   } else {
-    lusca.csrf({
-      secret: process.env.SESSION_SECRET
-    })(req, res, next);
+    lusca.csrf()(req, res, next);
   }
 });
-app.use(lusca.referrerPolicy('same-origin'));
-app.use(lusca.nosniff());
+// app.use(lusca.csp());
+// app.use(lusca.referrerPolicy('same-origin'));
+// app.use(lusca.nosniff());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
