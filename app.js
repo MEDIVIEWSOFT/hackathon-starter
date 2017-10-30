@@ -92,13 +92,11 @@ app.use(session({
     maxAge: 60000
   },
   store: new MongoStore({
-    mongoose.Promise
+    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+    auto_reconnect: true,
+    autoRemove: 'interval',
+    autoRemoveInterval: 3600
   })
-  // store: new MongoStore({
-  //   url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-  //   autoReconnect: true,
-  //   clear_interval: 3600
-  // })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
