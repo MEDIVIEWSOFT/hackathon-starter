@@ -49,6 +49,7 @@ const app = express();
 
 // helmet first
 app.use(helmet());
+app.use(helmet.noCache());
 
 /**
  * Connect to MongoDB.
