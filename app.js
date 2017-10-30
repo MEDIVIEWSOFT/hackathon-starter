@@ -82,7 +82,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
-app.set('trust proxy', true);
+app.enable('trust proxy', 1);
 app.use(session({
   resave: false,
   saveUninitialized: true,
