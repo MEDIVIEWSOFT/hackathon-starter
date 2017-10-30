@@ -21,6 +21,7 @@ const sass = require('node-sass-middleware');
 const multer = require('multer');
 const browserify = require('browserify');
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const helmet = require('helmet')
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -84,6 +85,9 @@ app.use(expressValidator());
 app.use(session({
   resave: true,
   saveUninitialized: true,
+  genid: function(req) {
+    return genuuid() // use UUIDs for session IDs
+  },
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
@@ -123,6 +127,7 @@ app.use((req, res, next) => {
 });
 // app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 10 }));
+app.use(helmet());
 
 /**
  * Primary app routes.
