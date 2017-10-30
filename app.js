@@ -72,7 +72,6 @@ app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.set('trust proxy', 1);
 app.use(expressStatusMonitor());
 app.use(compression());
 app.use(sass({
@@ -83,13 +82,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
+app.set('trust proxy', 1);
 app.use(session({
   resave: false,
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   cookie: {
-    secure: true,
-    maxAge: 60000
+    secure: true
   },
   store: new MongoStore({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
@@ -105,7 +104,9 @@ app.use((req, res, next) => {
   if (req.path === '/api/upload') {
     next();
   } else {
-    lusca.csrf()(req, res, next);
+    lusca.csrf({
+      secret: process.env.SESSION_SECRET
+    })(req, res, next);
   }
 });
 app.use(lusca.referrerPolicy('same-origin'));
