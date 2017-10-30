@@ -22,6 +22,7 @@ const multer = require('multer');
 const browserify = require('browserify');
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 const helmet = require('helmet')
+const uuidv4 = require('uuid/v4');
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -86,7 +87,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   genid: function(req) {
-    return genuuid() // use UUIDs for session IDs
+    return uuidv4(); // use UUIDs for session IDs
   },
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
