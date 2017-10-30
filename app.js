@@ -21,7 +21,6 @@ const sass = require('node-sass-middleware');
 const multer = require('multer');
 const browserify = require('browserify');
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
-const helmet = require('helmet')
 const uuidv4 = require('uuid/v4');
 
 /**
@@ -46,10 +45,6 @@ const passportConfig = require('./config/passport');
  * Create Express server.
  */
 const app = express();
-
-// helmet first
-app.use(helmet());
-app.use(helmet.noCache());
 
 /**
  * Connect to MongoDB.
