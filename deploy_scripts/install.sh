@@ -25,19 +25,20 @@ n lts
 # setup enviroment variables
 add_environment_vars() {
   if [ ! -z $2 ]; then
-    export $1=$2
+    tmp=$2
+    tmp2=$(sed -e 's/^"//' -e 's/"$//' <<< "$tmp")
+    export $1=$tmp2
+  
     hasEnv=`grep "export $1" ~/.bash_profile | cat`
     if [ -z "$hasEnv" ]; then
-      echo "export $1=$2" >> ~/.bash_profile
+      echo "export $1=$tmp2" >> ~/.bash_profile
     else
-      sed -i "/export $1=\b/c\export $1=$2" ~/.bash_profile
+      sed -i "/export $1=\b/c\export $1=$tmp2" ~/.bash_profile
     fi
   fi
 }
 
-PORT_org=$(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
-PORT_=$(sed -e 's/^"//' -e 's/"$//' <<<"$PORT_org")
-add_environment_vars PORT $PORT_
+add_environment_vars PORT $(aws ssm get-parameters --region ap-northeast-2 --names PORT --query Parameters[0].Value)
 
 # install pm2 module globaly
 npm install -g pm2
