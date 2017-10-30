@@ -88,7 +88,9 @@ app.use(session({
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   cookie: {
-    secure: true
+    domain: 'mediviewsoft.com',
+    secure: true,
+    expires: 60000
   },
   store: new MongoStore({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
