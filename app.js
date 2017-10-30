@@ -83,7 +83,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.enable('trust proxy');
-app.set('trust proxy', 5);
+app.set('trust proxy', 2);
 app.use(flash());
 app.use(session({
   resave: false,
