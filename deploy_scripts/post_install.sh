@@ -23,6 +23,7 @@ add_environment_vars() {
 
 add_environment_vars MONGODB_URI $(aws ssm get-parameters --region ap-northeast-2 --names MONGODB_URI --query Parameters[0].Value)
 add_environment_vars MONGOLAB_URI $(aws ssm get-parameters --region ap-northeast-2 --names MONGOLAB_URI --query Parameters[0].Value)
+add_environment_vars SESSION_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names SESSION_SECRET --query Parameters[0].Value --with-decryption)
 
 add_environment_vars GOOGLE_ID $(aws ssm get-parameters --region ap-northeast-2 --names GOOGLE_ID --query Parameters[0].Value)
 add_environment_vars GOOGLE_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names GOOGLE_SECRET --query Parameters[0].Value)
