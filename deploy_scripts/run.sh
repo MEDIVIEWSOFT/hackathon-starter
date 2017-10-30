@@ -24,16 +24,17 @@ add_environment_vars MONGOLAB_URI $(aws ssm get-parameters --region ap-northeast
 add_environment_vars SESSION_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names SESSION_SECRET --query Parameters[0].Value --with-decryption)
 
 add_environment_vars GOOGLE_ID $(aws ssm get-parameters --region ap-northeast-2 --names GOOGLE_ID --query Parameters[0].Value)
-add_environment_vars GOOGLE_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names GOOGLE_SECRET --query Parameters[0].Value)
+add_environment_vars GOOGLE_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names GOOGLE_SECRET --query Parameters[0].Value --with-decryption)
 add_environment_vars LINKEDIN_ID $(aws ssm get-parameters --region ap-northeast-2 --names LINKEDIN_ID --query Parameters[0].Value)
-add_environment_vars LINKEDIN_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names LINKEDIN_SECRET --query Parameters[0].Value)
+add_environment_vars LINKEDIN_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names LINKEDIN_SECRET --query Parameters[0].Value --with-decryption)
 add_environment_vars LINKEDIN_CALLBACK_URL $(aws ssm get-parameters --region ap-northeast-2 --names LINKEDIN_CALLBACK_URL --query Parameters[0].Value)
 add_environment_vars MAILGUN_ADDR $(aws ssm get-parameters --region ap-northeast-2 --names MAILGUN_ADDR --query Parameters[0].Value)
-add_environment_vars MAILGUN_PASSWORD $(aws ssm get-parameters --region ap-northeast-2 --names MAILGUN_PASSWORD --query Parameters[0].Value)
+add_environment_vars MAILGUN_PASSWORD $(aws ssm get-parameters --region ap-northeast-2 --names MAILGUN_PASSWORD --query Parameters[0].Value --with-decryption)
 
 add_environment_vars IMP_AMOUNT $(aws ssm get-parameters --region ap-northeast-2 --names IMP_AMOUNT --query Parameters[0].Value)
 add_environment_vars IMP_KEY $(aws ssm get-parameters --region ap-northeast-2 --names IMP_KEY --query Parameters[0].Value)
-add_environment_vars IMP_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names IMP_SECRET --query Parameters[0].Value)
+add_environment_vars IMP_SECRET $(aws ssm get-parameters --region ap-northeast-2 --names IMP_SECRET --query Parameters[0].Value --with-decryption)
+
 
 cd ~/ws2018-ticket
 pm2 start app.js -n www -i 0
