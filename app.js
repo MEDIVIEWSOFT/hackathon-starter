@@ -113,6 +113,11 @@ app.use((req, res, next) => {
 // app.use(lusca.csp());
 // app.use(lusca.referrerPolicy('same-origin'));
 // app.use(lusca.nosniff());
+app.use(lusca.hsts({
+  maxAge: 31536000,
+  includeSubDomains: true,
+  preload: true
+});
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use(lusca.hsts({
