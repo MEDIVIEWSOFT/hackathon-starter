@@ -36,13 +36,6 @@ block content
       .col-sm-9
         input.form-control(type='text', name='advisor', id='advisor', value=ticket.advisor)
     .form-group
-      label(class='col-sm-3 control-label') Poster presentation
-      .col-sm-9
-        if ticket.isPoster
-          label(class='col-sm-2' id='isPoster-val') Yes
-        else
-          label(class='col-sm-2' id='isPoster-val') No
-    .form-group
       label(class='col-sm-3 control-label') Payment Complete
       .col-sm-9
         if ticket.isPaid
@@ -53,7 +46,7 @@ block content
     .form-group(class='hidden')
       label(class='col-sm-3 control-label') is Korean?
       .col-sm-9
-        if ticket.isPoster
+        if ticket.isInKorea
           label(class='col-sm-2' id='isKorean-val') Yes
         else
           label(class='col-sm-2' id='isKorean-val') No

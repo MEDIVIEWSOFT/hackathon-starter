@@ -9,7 +9,6 @@ const ticketSchema = new mongoose.Schema({
   position: String,
   advisor: String,
   isInKorea: { type: Boolean, required: true },
-  isPoster: { type: Boolean, required: true }, 
   isPaid: { type: Boolean, required: true, default: false },
   purchaseID: String,
 }, { timestamps: true });

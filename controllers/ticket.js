@@ -35,7 +35,6 @@ exports.postRegistration = (req, res, next) => {
   const errors = req.validationErrors();
 
 	const isInKorea = req.body.inKorea ? true : false;
-	const isPoster = req.body.poster ? true : false;
 
 	// proceed for korean
 	const isPaid = req.body.isPaid ? true : false;
@@ -49,7 +48,6 @@ exports.postRegistration = (req, res, next) => {
   	position: req.body.position,
   	advisor: req.body.advisor,
   	isInKorea: isInKorea,
-  	isPoster: isPoster,
   	isPaid: isPaid,
   	paymentImpUId: req.body.paymentImpUId,
   	paymentMctUId: req.body.paymentMCTUId
