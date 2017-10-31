@@ -6,7 +6,7 @@ block content
     div(class='alert alert-info', role='alert') 
       h3 Use English only
 
-  form.form-horizontal(id='ticket-form', method='POST', action='/ticket')
+  form.form-horizontal(id='ticket-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label(class='col-sm-3 control-label', for='email', id='email') Email

@@ -11,7 +11,7 @@ block content
     h4 Registration fee for foreign A3 participants will be exempted
 
   - var email_addr = user.email;
-  form.form-horizontal(id='registration-form', method='POST', action='/register')
+  form.form-horizontal(id='registration-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     input(type='hidden', name='paymentImpUId')
     input(type='hidden', name='paymentMctUId')
