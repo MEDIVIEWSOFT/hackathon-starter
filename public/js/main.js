@@ -59,7 +59,9 @@ $(document).ready(function() {
 	        	  	email : email,
 	        	  	amount : rsp.amount,
 	        	  	//기타 필요한 데이터가 있으면 추가 전달
-          	  }).done(function(data) {
+          	  },
+              'json'
+              ).done(function(data) {
           	    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
 			  				console.log(data);
           	    if ( data.result == 'success' ) {
@@ -92,8 +94,7 @@ $(document).ready(function() {
 
         		      return false;
                 }, // data.result == 'success'
-                dataType: 'json'
-              }); // $.post
+              }); // $post.done
           } else {
             var msg = '결제에 실패하였습니다.';
             msg += '\n에러내용 : ' + rsp.error_msg;
