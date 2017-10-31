@@ -71,8 +71,6 @@ $(document).ready(function() {
                   $('input[name="paymentMctUId"]').val(rsp.merchant_uid);
                 
                   var msg = '결제가 완료되었습니다.';
-    	  		      msg += '\n고유ID : ' + rsp.imp_uid;
-    	  		      msg += '\n상점 거래ID : ' + rsp.merchant_uid;
     	  		      msg += '\n결제 금액 : ' + rsp.paid_amount;
     	  		      msg += '\n카드 승인번호 : ' + rsp.apply_num;
 
@@ -111,6 +109,9 @@ $(document).ready(function() {
         }); // request_pay
       } // mobile check
     } // isInKorea if statement
+
+    alert('알 수 없는 이유로 결제가 실패하였습니다.' );
+    return false;
   }); // submit event
 
   $('#ticket-form').on('submit', function(e) {
