@@ -94,10 +94,7 @@ app.use(session({
     expires: 60000
   },
   store: new MongoStore({
-    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-    auto_reconnect: true,
-    autoRemove: 'interval',
-    autoRemoveInterval: 60000
+    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI
   })
 }));
 
