@@ -118,7 +118,6 @@ $(document).ready(function() {
       } // mobile check
     } // isInKorea if statement
 
-    alert('Not possible' );
     return false;
   }); // submit event
 
@@ -205,4 +204,5 @@ $(document).ready(function() {
     $('#ticket-form').unbind('submit').submit();
   });
 
+  return false;
 });
