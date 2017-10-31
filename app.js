@@ -97,7 +97,7 @@ app.use(session({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
     auto_reconnect: true,
     autoRemove: 'interval',
-    autoRemoveInterval: 3600
+    autoRemoveInterval: 60000
   })
 }));
 
