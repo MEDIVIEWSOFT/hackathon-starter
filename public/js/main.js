@@ -2,11 +2,11 @@ $(document).ready(function() {
   // Place JavaScript code here...
   IMP.init('imp33162581');
 
-  $('#registration-form').on('submit', function(e) {
+  $('#registration-form').submit(function(e) {
 		e.preventDefault();
     const isInKorea = document.getElementById("livesInKorea").checked ? true : false;
   
-    if (isInKorea === false) {
+    if (!$("input[name='inKorea']").is(":checked")) {
       $('input[name="isPaid"]').val(true);
       $('input[name="paymentImpUId"]').val();
       $('input[name="paymentMctUId"]').val();
@@ -51,9 +51,10 @@ $(document).ready(function() {
           			xhr.setRequestHeader("X-CSRF-Token", csrf_token);
               }
             });
-            $.post(
-              "/payment/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-          	  {
+            $.ajax({
+              type: "POST",
+              url: "/payment/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+              data: {
           	    status : rsp.status,
 	        	  	imp_uid : rsp.imp_uid,
 	        	  	merchant_uid : rsp.mechant_uid,
@@ -61,8 +62,7 @@ $(document).ready(function() {
 	        	  	amount : rsp.amount,
 	        	  	//기타 필요한 데이터가 있으면 추가 전달
           	  },
-              'json'
-              ).done(function(data) {
+              success: function(data) {
           	    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
 			  				console.log(data);
           	    if ( data.result == 'success' ) {
@@ -93,7 +93,15 @@ $(document).ready(function() {
 
         		      return false;
                 } // data.result == 'success'
-              }); // $post.done
+              }, // function(data) (success function)
+              dataType: 'json',
+              error: function(){
+                alert('알 수 없는 이유로 결제가 실패하였습니다.' );
+                return true;
+              },
+              async: false,
+              cache: false
+            }); // $.ajax
           } else {
             var msg = '결제에 실패하였습니다.';
             msg += '\n에러내용 : ' + rsp.error_msg;
@@ -110,11 +118,11 @@ $(document).ready(function() {
       } // mobile check
     } // isInKorea if statement
 
-    alert('알 수 없는 이유로 결제가 실패하였습니다.' );
+    alert('Not possible' );
     return false;
   }); // submit event
 
-  $('#ticket-form').on('submit', function(e) {
+  $('#ticket-form').submit(function(e) {
 		e.preventDefault();
 
     if ($('#isPaid-val').text() === 'Yes') {
