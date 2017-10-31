@@ -57,7 +57,7 @@ $(document).ready(function() {
               data: {
           	    status : rsp.status,
 	        	  	imp_uid : rsp.imp_uid,
-	        	  	merchant_uid : rsp.mechant_uid,
+	        	  	merchant_uid : rsp.merchant_uid,
 	        	  	email : email,
 	        	  	amount : rsp.amount,
 	        	  	//기타 필요한 데이터가 있으면 추가 전달
