@@ -93,7 +93,7 @@ $(document).ready(function() {
         		      alert('결제실패 : 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.' );
 
         		      return false;
-                }, // data.result == 'success'
+                } // data.result == 'success'
               }); // $post.done
           } else {
             var msg = '결제에 실패하였습니다.';
