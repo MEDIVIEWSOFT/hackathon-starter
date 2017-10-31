@@ -3,11 +3,12 @@ extends layout
 block content
   .page-header
     h2 Registration
+    div(class='alert alert-info', role='alert') 
+      h3 Use English only
 
     h4 Early bird Registration Deadline : Dec 15, 2017 (Fri.) 
     h4 결제 금액 환불 및 취소는 불가하므로 신중히 결제하여 주시기 바랍니다.
     h4 Registration fee for foreign A3 participants will be exempted
-    h4 Use English only
 
   - var email_addr = user.email;
   form.form-horizontal(id='registration-form', method='POST', action='/register')
