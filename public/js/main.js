@@ -16,7 +16,8 @@ $(document).ready(function() {
     } else {
       const email = document.getElementById("email").value;
       const name = document.getElementById("name").value;
-      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      var md = new MobileDetect(window.navigator.userAgent);
+      if( md.mobile() || md.phone() || md.tablet() ) {
        // mobile payment
        var msg = "모바일 결제는 지원되지 않습니다.";
        alert(msg);
