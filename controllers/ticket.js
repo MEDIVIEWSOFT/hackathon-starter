@@ -106,6 +106,12 @@ exports.getTicket = (req, res) => {
  * Modify ticket
  */
 exports.postUpdateTicket = (req, res, next) => {
+  // requires signed in
+  if (!req.user) {
+    req.flash('signed out', 'please sign in again');
+    return res.redirect('/');
+  }
+
   const errors = req.validationErrors();
 
   if (errors) {
@@ -141,17 +147,25 @@ exports.postCompletePayment = (req, res) => {
     apiKey: process.env.IMP_KEY,
     secret: process.env.IMP_SECRET 
   });
-  
+
+ 
   iamporter.findByImpUid(req.body.imp_uid)
   .then((response) => {
+    // requires signed in
+    if (!req.user) {
+      req.flash('signed out', 'please sign in again');
+      iamporter.cancelByImpUid(req.body.imp_uid);
+      return res.redirect('/');
+    }
+ 
     if (response.data.status == 'paid' && response.data.amount == process.env.IMP_AMOUNT) {
 			res.contentType('json');
       res.send({
 				result: "success",
       });
     } else {
-			console.log(response.data.amount);
-			console.log(process.env.IMP_AMOUNT);
+			// console.log(response.data.amount);
+			// console.log(process.env.IMP_AMOUNT);
       iamporter.cancelByImpUid(req.body.imp_uid);
 			res.contentType('json');
       res.send({
