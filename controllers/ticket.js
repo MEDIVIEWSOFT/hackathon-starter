@@ -175,7 +175,7 @@ exports.postCompletePayment = (req, res) => {
 				console.log("Token error");
         req.flash('Token Error. Try again.');
         res.send({
-			  	result: "fail due to token problem",
+			  	result: "fail; token problem",
         });
 				return false;
       } else {
@@ -188,6 +188,10 @@ exports.postCompletePayment = (req, res) => {
 			}
     } else {
 			req.flash('Not possible');
+      res.send({
+				result: "fail; internal server error (not IamPort error)",
+      });
+
 			return false;
 		}
   });
