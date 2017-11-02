@@ -18,21 +18,21 @@ $(document).ready(function() {
       const name = document.getElementById("name").value;
       var md = new MobileDetect(window.navigator.userAgent);
       if( md.mobile() || md.phone() || md.tablet() ) {
-       // mobile payment
-       var msg = "모바일 결제는 지원되지 않습니다.";
-       alert(msg);
+        // mobile payment
+        var msg = "모바일 결제는 지원되지 않습니다.";
+        alert(msg);
 
-       return false;
-       // IMP.request_pay({
-       //   pg : 'uplus',
-       //   pay_method : 'card',
-       //   m_direct_url : 'http://ws2018-ticket.mediviewsoft.com/mobile/payment',
-       //   amount : 1000,
-       //   merchant_uid : 'ws2018pay_' + new Date().getTime(),
-       //   buyer_name : name,
-       //   buyer_email : email,
-       //   name : 'Winterschool 2018'
-       // });
+        return false;
+        // IMP.request_pay({
+        //   pg : 'uplus',
+        //   pay_method : 'card',
+        //   m_direct_url : 'http://ws2018-ticket.mediviewsoft.com/mobile/payment',
+        //   amount : 1000,
+        //   merchant_uid : 'ws2018pay_' + new Date().getTime(),
+        //   buyer_name : name,
+        //   buyer_email : email,
+        //   name : '2018 CSE Winterschool'
+        // });
       } else {
         IMP.request_pay({
           pg : 'uplus',
@@ -41,7 +41,7 @@ $(document).ready(function() {
           merchant_uid : 'ws2018pay_' + new Date().getTime(),
           buyer_name : name,
           buyer_email : email,
-          name : 'Winterschool 2018'
+          name : '2018 CSE Winterschool'
         }, function(rsp) {
           //결제 후 호출되는 callback함수
         	if ( rsp.success ) { //결제 성공
@@ -96,7 +96,7 @@ $(document).ready(function() {
               }, // function(data) (success function)
               dataType: 'json',
               error: function(err){
-                msg = '\n알 수 없는 이유로 결제가 실패하였습니다.';
+                msg = '\n알 수 없는 이유로 결제과정 중에서 에러가 발생하였습니다.';
                 msg += err.result;
                 console.log(msg);
                 alert(msg);
