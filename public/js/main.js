@@ -97,7 +97,7 @@ $(document).ready(function() {
               dataType: 'json',
               error: function(err){
                 msg = '\n알 수 없는 이유로 결제가 실패하였습니다.';
-                msg += err;
+                msg += err.result;
                 alert(msg);
                 return false;
               },

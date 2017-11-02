@@ -155,7 +155,7 @@ exports.postCompletePayment = (req, res) => {
       iamporter.cancelByImpUid(req.body.imp_uid);
 			res.contentType('json');
       res.send({
-				result: "fail",
+				result: "fail; amount mismatch",
       });
     }
   })
@@ -165,16 +165,25 @@ exports.postCompletePayment = (req, res) => {
       if (err.status === 404) {
 				console.log("no record");
         req.flash('Payment doesn\'t exist');
+        res.send({
+			  	result: "fail; can't find payment",
+        });
         // not paid, so nothing to refund
         return resolve("Can't find payment");
       } else if (err.status === 401) {
         // token invalid
 				console.log("Token error");
         req.flash('Token Error. Try again.');
+        res.send({
+			  	result: "fail due to token problem",
+        });
 				return false;
       } else {
 				// empty response
         req.flash('Not possible');
+        res.send({
+			  	result: "fail; not possible",
+        });
 				return false;
 			}
     } else {
