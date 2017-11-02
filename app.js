@@ -91,7 +91,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   cookie: {
     secure: true,
-    expires: 60000
+    expires: 180000
   },
   store: new MongoStore({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI
