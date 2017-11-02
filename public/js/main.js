@@ -95,9 +95,11 @@ $(document).ready(function() {
                 } // data.result == 'success'
               }, // function(data) (success function)
               dataType: 'json',
-              error: function(){
-                alert('알 수 없는 이유로 결제가 실패하였습니다.' );
-                return true;
+              error: function(err){
+                msg = '\n알 수 없는 이유로 결제가 실패하였습니다.';
+                msg += err;
+                alert(msg);
+                return false;
               },
               async: false,
               cache: false
