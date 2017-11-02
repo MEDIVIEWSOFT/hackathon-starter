@@ -98,6 +98,7 @@ $(document).ready(function() {
               error: function(err){
                 msg = '\n알 수 없는 이유로 결제가 실패하였습니다.';
                 msg += err.result;
+                console.log(msg);
                 alert(msg);
                 return false;
               },
