@@ -95,11 +95,9 @@ $(document).ready(function() {
                 } // data.result == 'success'
               }, // function(data) (success function)
               dataType: 'json',
-              error: function(err){
-                msg = '\n알 수 없는 이유로 결제과정 중에서 에러가 발생하였습니다.';
-                msg += err.result;
-                console.log(msg);
-                alert(msg);
+              error: function(xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
                 return false;
               },
               async: false,
